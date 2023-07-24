@@ -2,7 +2,7 @@
 export default {
   data() {
     return {
-      city: "Some",
+      city: "",
     }
   }
 }
@@ -11,8 +11,8 @@ export default {
 <template>
   <div class="wrapper">
     <h1>Weather App on Vue.js</h1>
-    <p>Check the weather in {{ city }}</p>
-    <input type="text" v-on:input="this.city = $event.target.value" placeholder="Enter city...">
+    <p>Check the weather in {{ city == "" ? "your city" : city}}</p>
+    <input type="text" v-model="city" placeholder="Enter city...">
     <button>Get weather</button>
   </div>
 </template>
@@ -23,7 +23,6 @@ export default {
   height: 500px;
   padding: 20px;
   border-radius: 50px;
-  border: 2px solid darkblue;
   background: darkslategray;
   color: white;
   text-align: center;
