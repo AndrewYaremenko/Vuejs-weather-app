@@ -1,8 +1,11 @@
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
       city: "",
+      info: "",
       error: "",
     }
   },
@@ -19,6 +22,7 @@ export default {
       }
 
       this.error = "";
+      axios.get('https://jsonplaceholder.typicode.com/todos/1').then(res => (this.info = res));
       return true;
     }
   }
@@ -32,7 +36,8 @@ export default {
     <input type="text" v-model="city" placeholder="Enter city...">
     <button v-if="city != ''" @click="getWeather()" class="activeBtn">Get weather</button>
     <button disabled v-else class="disableBtn">Enter city</button>
-    <p class="error">{{ error }}</p>
+    <p v-show="error != ''" class="error">{{ error }}</p>
+    <p v-show="info != ''">{{ info }}</p>
   </div>
 </template>
 
