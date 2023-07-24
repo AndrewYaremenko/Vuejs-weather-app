@@ -3,11 +3,23 @@ export default {
   data() {
     return {
       city: "",
+      error: "",
     }
   },
   computed: {
     cityName() {
       return "\"" + this.city + "\"";
+    }
+  },
+  methods: {
+    getWeather() {
+      if (this.city.trim().length < 2) {
+        this.error = "Title too short";
+        return false;
+      }
+
+      this.error = "";
+      return true;
     }
   }
 }
@@ -18,8 +30,9 @@ export default {
     <h1>Weather App on Vue.js</h1>
     <p>Check the weather in {{ city == "" ? "your city" : cityName }}</p>
     <input type="text" v-model="city" placeholder="Enter city...">
-    <button v-if="city != ''" class="activeBtn">Get weather</button>
-    <button v-else disabled class="disableBtn">Enter city</button>
+    <button v-if="city != ''" @click="getWeather()" class="activeBtn">Get weather</button>
+    <button disabled v-else class="disableBtn">Enter city</button>
+    <p class="error">{{ error }}</p>
   </div>
 </template>
 
@@ -79,5 +92,9 @@ export default {
   padding: 10px 24px;
   margin-left: 20px;
   cursor: not-allowed;
+}
+
+.error {
+  color: red;
 }
 </style>
