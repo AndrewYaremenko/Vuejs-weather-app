@@ -4,6 +4,11 @@ export default {
     return {
       city: "",
     }
+  },
+  computed: {
+    cityName() {
+      return "\"" + this.city + "\"";
+    }
   }
 }
 </script>
@@ -11,7 +16,7 @@ export default {
 <template>
   <div class="wrapper">
     <h1>Weather App on Vue.js</h1>
-    <p>Check the weather in {{ city == "" ? "your city" : "\"" + city + "\"" }}</p>
+    <p>Check the weather in {{ city == "" ? "your city" : cityName }}</p>
     <input type="text" v-model="city" placeholder="Enter city...">
     <button v-if="city != ''" class="activeBtn">Get weather</button>
     <button v-else disabled class="disableBtn">Enter city</button>
