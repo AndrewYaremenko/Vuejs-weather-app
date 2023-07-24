@@ -1,12 +1,18 @@
-<script setup>
-
+<script>
+export default {
+  data() {
+    return {
+      city: "Some",
+    }
+  }
+}
 </script>
 
 <template>
   <div class="wrapper">
     <h1>Weather App on Vue.js</h1>
-    <p>Check the weather in your city</p>
-    <input type="text" placeholder="Enter city...">
+    <p>Check the weather in {{ city }}</p>
+    <input type="text" v-on:input="this.city = $event.target.value" placeholder="Enter city...">
     <button>Get weather</button>
   </div>
 </template>
