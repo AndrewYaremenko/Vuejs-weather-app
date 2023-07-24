@@ -11,9 +11,10 @@ export default {
 <template>
   <div class="wrapper">
     <h1>Weather App on Vue.js</h1>
-    <p>Check the weather in {{ city == "" ? "your city" : city}}</p>
+    <p>Check the weather in {{ city == "" ? "your city" : "\"" + city + "\"" }}</p>
     <input type="text" v-model="city" placeholder="Enter city...">
-    <button>Get weather</button>
+    <button v-if="city != ''" class="activeBtn">Get weather</button>
+    <button v-else disabled class="disableBtn">Enter city</button>
   </div>
 </template>
 
@@ -50,7 +51,7 @@ export default {
   border-bottom-color: rgba(63, 203, 159, 1);
 }
 
-.wrapper button {
+.wrapper .activeBtn {
   background: #16956d;
   color: white;
   border-radius: 10px;
@@ -61,7 +62,17 @@ export default {
   transition: transform 500ms ease;
 }
 
-.wrapper button:hover {
+.wrapper .activeBtn:hover {
   transform: scale(1.1);
+}
+
+.wrapper .disableBtn {
+  background: #0e6046;
+  color: white;
+  border-radius: 10px;
+  border: 2px solid #093929;
+  padding: 10px 24px;
+  margin-left: 20px;
+  cursor: not-allowed;
 }
 </style>
