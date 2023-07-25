@@ -5,13 +5,25 @@ export default {
   data() {
     return {
       city: "",
-      info: "",
+      info: {},
       error: "",
     }
   },
   computed: {
     cityName() {
       return "\"" + this.city + "\"";
+    },
+    showTemp() {
+      return "temperature: " + this.info.main.temp;
+    },
+    showFeelsLike() {
+      return "feels like: " + this.info.main.feels_like;
+    },
+    showMinTemp() {
+      return "min temperature: " + this.info.main.temp_min;
+    },
+    showMaxTemp() {
+      return "max temperature: " + this.info.main.temp_max;
     }
   },
   methods: {
@@ -22,7 +34,11 @@ export default {
       }
 
       this.error = "";
-      axios.get('https://jsonplaceholder.typicode.com/todos/1').then(res => (this.info = res));
+
+      axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=metric&appid=${import.meta.env.VITE_API_KEY}`)
+      .then(res => (this.info = res.data))
+      .catch(error => (this.error = "Unknown locality", this.info = {}));
+
       return true;
     }
   }
@@ -36,8 +52,11 @@ export default {
     <input type="text" v-model="city" placeholder="Enter city...">
     <button v-if="city != ''" @click="getWeather()" class="activeBtn">Get weather</button>
     <button disabled v-else class="disableBtn">Enter city</button>
-    <p v-show="error != ''" class="error">{{ error }}</p>
-    <p v-show="info != ''">{{ info }}</p>
+    <p v-show="error" class="error">{{ error }}</p>
+    <p v-if="info.main">{{ showTemp }}</p>
+    <p v-if="info.main">{{ showFeelsLike }}</p>
+    <p v-if="info.main">{{ showMinTemp }}</p>
+    <p v-if="info.main">{{ showMaxTemp }}</p>
   </div>
 </template>
 
